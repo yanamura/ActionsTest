@@ -26,6 +26,8 @@ jobs:
 
   test:
     if: contains(github.event.comment.body, '#release')
+    runs-on: ubuntu-latest
+    steps:
     - name: Run a multi-line script
       run: |
         echo Add other actions to build,
