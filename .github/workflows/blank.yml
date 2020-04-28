@@ -28,8 +28,11 @@ jobs:
     if: contains(github.event.comment.body, '#release')
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
     - name: Run a multi-line script
       run: |
         echo Add other actions to build,
         echo test, and deploy your project.
-    
+        ./test.sh
