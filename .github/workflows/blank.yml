@@ -13,10 +13,5 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: khan/pull-request-comment-trigger@master
-        with:
-          trigger: 'hoge'
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       - run: 'echo Found it!'
         if: steps.check.outputs.triggered == 'true'
