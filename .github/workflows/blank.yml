@@ -14,9 +14,6 @@ jobs:
     if: contains(github.event.comment.body, '#release')
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
     - uses: khan/pull-request-comment-trigger@master
         with:
           trigger: '@deploy'   
