@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: khan/pull-request-comment-trigger@master
         with:
-          trigger: '#deploy'
+          trigger: 'hoge'
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       - run: 'echo Found it!'
