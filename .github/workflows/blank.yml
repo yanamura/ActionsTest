@@ -18,7 +18,6 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
     - uses: khan/pull-request-comment-trigger@master
-        id: check
         with:
           trigger: '@deploy'   
     - name: Run a multi-line script
