@@ -12,8 +12,8 @@ jobs:
     if: contains(github.event.comment.body, '#increment')
     runs-on: ubuntu-latest
     steps:
-    - uses: yanamura/ios-bump-version@v1.0.0
     - uses: actions/checkout@v2
+    - uses: yanamura/ios-bump-version@v1.0.1
     - name: run
       run: |
         git diff
