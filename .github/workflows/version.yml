@@ -17,13 +17,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: yanamura/ios-bump-version@v1.0.1
+    - uses: igordcsouza/github-action-get-branch-name@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
     - name: run
       run: |
-        echo ${GITHUB_HEAD_REF}
+        echo ${BRANCH_NAME}
         git diff
         git config --global user.name "yanamura"
         git config --global user.email "yanamura3@gmail.com"
-        git checkout ${GITHUB_HEAD_REF}
+        git checkout ${BRANCH_NAME}
         git add .
         git commit -m "build version ++"
-        git push origin ${GITHUB_HEAD_REF}
+        git push origin ${BRANCH_NAME}
