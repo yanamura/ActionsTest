@@ -17,3 +17,8 @@ jobs:
     - name: run
       run: |
         git diff
+        git config --global user.name "yanamura"
+        git config --global user.email "yanamura3@gmail.com"
+        git add .
+        git commit -m "build version ++"
+        git push origin HEAD
