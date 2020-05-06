@@ -19,11 +19,11 @@ jobs:
     - uses: yanamura/ios-bump-version@v1.0.1
     - name: run
       run: |
-        echo ${GITHUB_REF##*/}
+        echo ${{ steps.extract_branch.outputs.branch }}
         git diff
         git config --global user.name "yanamura"
         git config --global user.email "yanamura3@gmail.com"
-        git checkout ${GITHUB_REF##*/}
+        git checkout ${{ steps.extract_branch.outputs.branch }}
         git add .
         git commit -m "build version ++"
-        git push origin ${GITHUB_REF##*/}
+        git push origin ${{ steps.extract_branch.outputs.branch }}
