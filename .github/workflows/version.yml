@@ -19,6 +19,7 @@ jobs:
         git diff
         git config --global user.name "yanamura"
         git config --global user.email "yanamura3@gmail.com"
+        git checkout ${GITHUB_REF##*/}
         git add .
         git commit -m "build version ++"
         git push origin ${GITHUB_REF##*/}
