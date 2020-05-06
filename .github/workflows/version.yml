@@ -22,7 +22,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
     - name: run
       run: |
-        echo ${BRANCH_NAME}
+        echo ${{ github.head_ref }}
         git diff
         git config --global user.name "yanamura"
         git config --global user.email "yanamura3@gmail.com"
