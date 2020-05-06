@@ -28,6 +28,7 @@ jobs:
         git diff
         git config --global user.name "yanamura"
         git config --global user.email "yanamura3@gmail.com"
+        git fetch -p
         git checkout ${{ steps.vars.outputs.branch }}
         git add .
         git commit -m "build version ++"
