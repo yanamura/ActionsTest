@@ -20,7 +20,7 @@ jobs:
       - name: Create Log
         id: Changelog
         run: |
-          ./changelog.sh
+          ./changelog.sh ${{ github.sha }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
