@@ -22,8 +22,8 @@ jobs:
       - name: Create Log
         id: Changelog
         run: |
-          echo "::set-output name=changelog::$(git log $(git tag --sort version:refname | tail -n 2 | head -n 1) $(git tag --sort version:refname | tail -n 1) --merges --reverse --pretty=format:"* %b")"
-          echo "::set-output name=diff::$(git diff @~2)"
+          echo "::set-output name=changelog::$(git log $(git tag --sort version:refname | tail -n 2 | head -n 1)..$(git tag --sort version:refname | tail -n 1) --merges --reverse --pretty=format:"* %b")"
+          echo ::set-output name=diff::$(git diff @~2)
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
