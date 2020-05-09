@@ -1,6 +1,6 @@
 #!/bin/bash
 
-changelog = $(git diff @~2)
+changelog=$(git diff @~2)
 
 changelog="${changelog//'%'/'%25'}"
 changelog="${changelog//$'\n'/'%0A'}"
