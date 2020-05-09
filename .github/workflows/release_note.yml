@@ -23,7 +23,7 @@ jobs:
         id: Changelog
         run: |
           echo "::set-output name=changelog::$(git log $(git tag --sort version:refname | tail -n 2 | head -n 1)..$(git tag --sort version:refname | tail -n 1) --merges --reverse --pretty=format:"* %b")"
-          echo ::set-output name=diff::$(git diff @~2)
+          changelog.sh
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -35,6 +35,5 @@ jobs:
           body: |
             Changes in this Release
             ${{ steps.ChangeLog.outputs.changelog}}
-            ${{ steps.ChangeLog.outputs.diff}}
           draft: false
           prerelease: false
