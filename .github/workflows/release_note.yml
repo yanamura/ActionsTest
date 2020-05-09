@@ -32,7 +32,12 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: |
-            Changes in this Release
             ${{ steps.ChangeLog.outputs.changelog}}
+            ## 公開日
+            公開日 | 範囲
+            --- | ---
+            2020// | 1%
+            2020// | 2%
+            2020// | 100%
           draft: false
           prerelease: false
