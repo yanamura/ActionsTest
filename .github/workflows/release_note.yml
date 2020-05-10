@@ -18,9 +18,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: git fetch --prune --unshallow
       - name: Create Log
-        id: Changelog
-        run: |
-          ./changelog.sh ${{ github.sha }}
+        id: changelog
+        uses: yanamura/git-merge-diff@v1
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -30,7 +29,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: |
-            ${{ steps.ChangeLog.outputs.changelog}}
+            ${{ steps.changeLog.outputs.diff}}
             ## 公開日
             公開日 | 範囲
             --- | ---
