@@ -19,7 +19,7 @@ jobs:
       - run: git fetch --prune --unshallow
       - name: Create Log
         id: changelog
-        uses: yanamura/git-merge-diff@v1
+        uses: yanamura/git-merge-diff@v1.0.0
       - name: Date
         id: release_date
         run: ./github/scripts/release_date
