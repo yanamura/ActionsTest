@@ -20,6 +20,9 @@ jobs:
       - name: Create Log
         id: changelog
         uses: yanamura/git-merge-diff@v1
+      - name: Date
+        id: release_date
+        run: ./github/scripts/release_date
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -29,12 +32,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: |
-            ${{ steps.changeLog.outputs.diff}}
-            ## 公開日
-            公開日 | 範囲
-            --- | ---
-            2020// | 1%
-            2020// | 2%
-            2020// | 100%
+            ${{ steps.changelog.outputs.diff}}
+            ${{ steps.release_date.outputs.release_date}}
           draft: false
           prerelease: false
