@@ -18,7 +18,7 @@ jobs:
         uses: yanamura/git-merge-diff@v1
       - name: Date
         id: release_date
-        run: ./github/scripts/release_date.sh
+        run: ./.github/scripts/release_date.sh
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
