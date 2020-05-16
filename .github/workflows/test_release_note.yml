@@ -13,3 +13,6 @@ jobs:
       - name: Create Log
         id: changelog
         uses: yanamura/git-merge-diff@add-arg
+        with:
+          from: latest
+          to: HEAD
