@@ -12,7 +12,7 @@ jobs:
       - run: git fetch --prune --unshallow
       - name: Create Log
         id: changelog
-        uses: yanamura/git-merge-diff@add-arg
+        uses: yanamura/git-merge-diff@v1
         with:
           from: latest
           to: HEAD
