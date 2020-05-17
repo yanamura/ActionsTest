@@ -1,0 +1,13 @@
+name: automerge
+on:
+  pull_request_review_comment:
+    types: [created]
+jobs:
+  automerge:
+    if: contains(github.event.comment.body, '#shipit')
+    runs-on: ubuntu-latest
+    steps:
+      - name: automerge
+        uses: "pascalgn/automerge-action@v0.8.1
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
