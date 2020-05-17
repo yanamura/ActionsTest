@@ -11,13 +11,28 @@ git pull --rebase origin master
 git merge origin/${RELEASE_BRANCH} --no-ff --no-edit
 git push origin master
 
+if [ $? -ne 0]; then
+  echo "master merge failed"
+  exit 1
+fi
+
 # add tag
 VERSION=${RELEASE_BRANCH#release-*}
-git tag ${VERSION}
+git tag v${VERSION}
 git push origin --tags
+
+if [ $? -ne 0]; then
+  echo "add tag failed"
+  exit 1
+fi
 
 # merge to develop
 git checkout develop
 git pull --rebase origin develop
 git merge origin/${RELEASE_BRANCH} --no-ff --no-edit
 git push origin develop
+
+if [ $? -ne 0]; then
+  echo "develop merge failed"
+  exit 1
+fi
