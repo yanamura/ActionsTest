@@ -1,0 +1,19 @@
+name: automerge
+on:
+  pull_request_review_comment:
+    types: [created]
+jobs:
+  automerge:
+    if: contains(github.event.comment.body, '#shipit')
+    runs-on: ubuntu-latest
+    steps:
+      - name: merge pull request
+        uses: actions/github-script@0.9.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+              github.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number
+              })
