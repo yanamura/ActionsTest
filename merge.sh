@@ -8,7 +8,7 @@ git config --global user.email "yanamura3@gmail.com"
 # merge to master
 git checkout master
 git pull --rebase origin master
-git merge ${RELEASE_BRANCH} --no-ff --no-edit
+git merge origin/${RELEASE_BRANCH} --no-ff --no-edit
 git push origin master
 
 # add tag
@@ -19,5 +19,5 @@ git push origin --tags
 # merge to develop
 git checkout develop
 git pull --rebase origin develop
-git merge ${RELEASE_BRANCH} --no-ff --no-edit
+git merge origin/${RELEASE_BRANCH} --no-ff --no-edit
 git push origin develop
