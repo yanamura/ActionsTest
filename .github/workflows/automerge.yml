@@ -1,10 +1,10 @@
 name: automerge
 on:
-  pull_request_review_comment:
+  label:
     types: [created]
 jobs:
   automerge:
-    if: github.event.comment.body == '#shipit'
+    if: github.event.label.name == 'shipit'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
