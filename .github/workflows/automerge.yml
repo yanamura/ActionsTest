@@ -1,7 +1,7 @@
 name: automerge
 on:
-  label:
-    types: [created]
+  pull_request:
+    types: [labeled]
 jobs:
   automerge:
     if: github.event.label.name == 'shipit'
