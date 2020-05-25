@@ -7,13 +7,20 @@ jobs:
     if: contains(github.event.comment.body, '#shipit')
     runs-on: ubuntu-latest
     steps:
-      - name: merge pull request
-        uses: actions/github-script@0.9.0
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-              github.pulls.merge({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number
-              })
+    - uses: actions/checkout@v1
+    - name: Extract branch name
+      uses: mdecoleman/pr-branch-name@1.0.0
+      id: extract_branch
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Extract tag name
+      shell: bash
+      run: |
+        branch=${{ steps.extract_branch.outputs.branch }}
+        echo "##[set-output name=tag;]$(echo ${branch#release-})"
+      id: extract_tag
+    - uses: yanamura/git-flow-merge-action@v1
+      with: 
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ steps.extract_branch.outputs.branch }}
+        tag: v${{ steps.extract_tag.outputs.tag }}
