@@ -4,7 +4,7 @@ on:
     types: [created]
 jobs:
   automerge:
-    if: contains(github.event.comment.body, '#shipit')
+    if: github.event.comment.body == '#shipit'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -19,8 +19,10 @@ jobs:
         branch=${{ steps.extract_branch.outputs.branch }}
         echo "##[set-output name=tag;]$(echo ${branch#release-})"
       id: extract_tag
-    - uses: yanamura/git-flow-merge-action@v1
-      with: 
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ steps.extract_branch.outputs.branch }}
-        tag: v${{ steps.extract_tag.outputs.tag }}
+    - name: Merge
+      if: startsWith(${{ steps.extract_branch.outputs.branch }}, release)
+      uses: yanamura/git-flow-merge-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.extract_branch.outputs.branch }}
+          tag: v${{ steps.extract_tag.outputs.tag }}
