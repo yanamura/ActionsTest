@@ -20,7 +20,7 @@ jobs:
         echo "##[set-output name=tag;]$(echo ${branch#release-})"
       id: extract_tag
     - name: Merge
-      if: startsWith(${{ steps.extract_branch.outputs.branch }}, release)
+      if: startsWith(${{ steps.extract_branch.outputs.branch }}, 'release')
       uses: yanamura/git-flow-merge-action@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
