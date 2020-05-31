@@ -6,10 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Extract branch name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
     - uses: actions/github-script@v1
       if: startsWith(github.ref, 'refs/heads/release-')
       with:
@@ -19,6 +15,6 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             title: 'hoge',
-            head: steps.extract_branch.outputs.branch,
+            head: github.ref.split('refs/heads/').join(''),
             base: 'master'
           })
