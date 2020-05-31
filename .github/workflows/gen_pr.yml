@@ -15,6 +15,6 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             title: 'hoge',
-            head: github.ref.split('refs/heads/').join(''),
+            head: github.ref.replace('refs/heads/',''),
             base: 'master'
           })
