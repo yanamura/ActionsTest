@@ -1,0 +1,22 @@
+name: gen_pr
+on:
+  push:
+    branches: 
+      - release-*
+    types: [created]
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/github-script@v1
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.pulls.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'hoge'
+            head: ${GITHUB_REF}
+            base: 'master'
+          })
