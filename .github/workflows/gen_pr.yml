@@ -1,0 +1,20 @@
+name: gen_pr
+on:
+  create
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/github-script@v1
+      if: startsWith(github.ref, 'refs/heads/release-')
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.pulls.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `Release${context.ref.replace('refs/heads/release','')}`,
+            head: context.ref.replace('refs/heads/',''),
+            base: 'master'
+          })
