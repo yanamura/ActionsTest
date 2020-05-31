@@ -13,9 +13,9 @@ jobs:
         from: latest
         to: HEAD
     - name: Set env
-      run: |
-        diff=${{ steps.changelog.outputs.diff }}
-        echo "::set-env name=PR_BODY::$(echo ${diff})"
+      run: echo $PR_BODY
+      env:
+        PR_BODY: ${{ steps.changelog.outputs.diff }}
     - uses: actions/github-script@v1
       if: startsWith(github.ref, 'refs/heads/release-')
       with:
