@@ -1,15 +1,13 @@
 name: gen_pr
 on:
-  push:
-    branches: 
-      - release-*
-    types: [created]
+  create
 jobs:
   pr:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - uses: actions/github-script@v1
+      if: startsWith(${GITHUB_REF}, 'refs/heads/release-')
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
