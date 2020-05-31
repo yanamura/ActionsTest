@@ -11,10 +11,11 @@ jobs:
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
+
           github.pulls.create({
             owner: context.repo.owner,
             repo: context.repo.repo,
             title: 'hoge',
-            head: github.ref.replace('refs/heads/',''),
+            head: context.ref.replace('refs/heads/',''),
             base: 'master'
           })
