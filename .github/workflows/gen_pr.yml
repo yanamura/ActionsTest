@@ -12,10 +12,6 @@ jobs:
       with:
         from: latest
         to: HEAD
-    - name: Set env
-      run: echo $PR_BODY
-      env:
-        PR_BODY: ${{ steps.changelog.outputs.diff }}
     - uses: actions/github-script@v1
       if: startsWith(github.ref, 'refs/heads/release-')
       with:
@@ -30,3 +26,5 @@ jobs:
             base: 'master',
             body: process.env.PR_BODY
           })
+      env:
+        PR_BODY: ${{ steps.changelog.outputs.diff }}
