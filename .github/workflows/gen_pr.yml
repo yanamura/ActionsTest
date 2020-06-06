@@ -29,3 +29,31 @@ jobs:
           })
       env:
         PR_BODY: ${{ steps.changelog.outputs.diff }}
+  version:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: mdecoleman/pr-branch-name@1.0.0
+      id: branch
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Extract version
+      shell: bash
+      run: |
+        branch=${{ steps.branch.outputs.branch }}
+        echo "##[set-output name=version;]$(echo ${version#release-})"
+      id: version
+    - uses: yanamura/ios-bump-version@v1.0.1
+      with:
+        version: ${{ steps.version.outputs.version }}
+    - name: run
+      run: |
+        echo ${{ steps.branch.outputs.branch }}
+        git diff
+        git config --global user.name "yanamura"
+        git config --global user.email "yanamura3@gmail.com"
+        git fetch -p
+        git checkout ${{ steps.branch.outputs.branch }}
+        git add .
+        git commit -m ":punch: bump version"
+        git push origin ${{ steps.branch.outputs.branch }}    
