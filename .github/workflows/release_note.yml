@@ -1,7 +1,7 @@
-name: Release
+name: Release Note
 
 on:
-  create:
+  push:
     tags:
       - 'v*'
 jobs:
