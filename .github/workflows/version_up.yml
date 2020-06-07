@@ -1,0 +1,28 @@
+name: version_up
+on:
+  create
+jobs:
+  version:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Extract version
+      shell: bash
+      run: |
+        version=${{ github.ref }}
+        echo "##[set-output name=version;]$(echo ${version#refs/heads/release-})"
+      id: version
+    - uses: yanamura/ios-bump-version@v1.0.1
+      with:
+        version: ${{ steps.version.outputs.version }}
+    - name: run
+      run: |
+        echo ${{ steps.branch.outputs.branch }}
+        git diff
+        git config --global user.name "yanamura"
+        git config --global user.email "yanamura3@gmail.com"
+        git fetch -p
+        git checkout ${{ steps.branch.outputs.branch }}
+        git add .
+        git commit -m ":punch: bump version"
+        git push origin ${{ steps.branch.outputs.branch }}  
