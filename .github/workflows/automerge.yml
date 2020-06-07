@@ -23,6 +23,6 @@ jobs:
       if: startsWith(steps.extract_branch.outputs.branch, 'release')
       uses: yanamura/git-flow-merge-action@v1
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.BOT_TOKEN }}
         branch: ${{ steps.extract_branch.outputs.branch }}
         tag: v${{ steps.extract_tag.outputs.tag }}
