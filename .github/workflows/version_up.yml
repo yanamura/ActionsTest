@@ -3,6 +3,7 @@ on:
   create
 jobs:
   version:
+    if: startsWith(github.ref, 'refs/heads/release-')
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
