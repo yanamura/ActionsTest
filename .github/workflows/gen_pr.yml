@@ -1,6 +1,8 @@
-name: gen_pr
+name: Generate Release Pull Request
 on:
-  create
+  create:
+    branches:
+      - 'release-*'
 jobs:
   pr:
     runs-on: ubuntu-latest
@@ -14,7 +16,6 @@ jobs:
         from: latest
         to: HEAD
     - uses: actions/github-script@v1
-      if: startsWith(github.ref, 'refs/heads/release-')
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
