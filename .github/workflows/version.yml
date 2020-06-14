@@ -5,14 +5,12 @@ name: Vup
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  pull_request_review_comment:
-    types: [created]
-defaults:
-  run:
-    shell: bash
+  pull_request:
+    types: [opened]
+
 jobs:
-  test:
-    if: contains(github.event.comment.body, '#increment')
+  versionup:
+    if: startsWith(github.event.pull_request.title, 'Release')
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2

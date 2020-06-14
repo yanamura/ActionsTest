@@ -16,7 +16,7 @@ jobs:
         to: HEAD
     - uses: actions/github-script@v1
       with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
+        github-token: ${{secrets.BOT_TOKEN}}
         script: |
           console.log(process.env)
           github.pulls.create({
