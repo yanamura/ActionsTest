@@ -9,7 +9,25 @@ on:
     types: [opened]
 
 jobs:
-  test:
+  versionup:
+    if: startsWith(github.event.pull_request.title, 'Release')
     runs-on: macos-latest
     steps:
-    - run: echo ${{ github.event.pull_request.title }}
+    - uses: actions/checkout@v2
+    - uses: mdecoleman/pr-branch-name@1.0.0
+      id: vars
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - run: echo ${{ steps.vars.outputs.branch }}
+    - uses: yanamura/ios-bump-version@v1.0.1
+    - name: run
+      run: |
+        echo ${{ steps.vars.outputs.branch }}
+        git diff
+        git config --global user.name "yanamura"
+        git config --global user.email "yanamura3@gmail.com"
+        git fetch -p
+        git checkout ${{ steps.vars.outputs.branch }}
+        git add .
+        git commit -m "build version ++"
+        git push origin ${{ steps.vars.outputs.branch }}
