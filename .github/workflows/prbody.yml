@@ -1,0 +1,18 @@
+name: automerge
+on:
+  pull_request:
+    types: [labeled]
+jobs:
+  automerge:
+    if: github.event.label.name == 'body'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/github-script@v1
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: github.event.number
+          })
