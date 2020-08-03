@@ -1,4 +1,4 @@
-name: automerge
+name: prbody
 on:
   pull_request:
     types: [labeled]
