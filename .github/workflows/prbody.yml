@@ -8,12 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/github-script@v2
+      id: pr-body
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
           console.log(context.issue)
-          github.pulls.get({
+          const result = await github.pulls.get({
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number
           })
+    - name: result
+      run: echo ${{steps.pr-body.outputs.result}}
