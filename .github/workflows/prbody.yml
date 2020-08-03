@@ -7,6 +7,12 @@ jobs:
     if: github.event.label.name == 'body'
     runs-on: ubuntu-latest
     steps:
+    - name: echo
+      run:
+        echo ${{context}}
+        echo context
+        echo ${{github.event}}
+        echo github.event
     - uses: actions/github-script@v1
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
