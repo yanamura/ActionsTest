@@ -17,6 +17,6 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number
-          }).body
+          })
     - name: result
-      run: echo ${{steps.pr-body.outputs.result}}
+      run: echo ${{steps.pr-body.outputs.result.body}}
