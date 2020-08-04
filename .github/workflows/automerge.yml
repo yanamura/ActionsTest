@@ -26,3 +26,34 @@ jobs:
         github_token: ${{ secrets.BOT_TOKEN }}
         branch: ${{ steps.extract_branch.outputs.branch }}
         tag: v${{ steps.extract_tag.outputs.tag }}
+    - name: Get body
+      id: pr-body
+      uses: actions/github-script@v2
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          console.log(context.issue)
+          const result = await github.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
+          })
+          return result.data.body
+    - name: ReleaseNote
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.extract_tag.outputs.tag }}
+        release_name: Release ${{ steps.extract_tag.outputs.tag }}
+        body: |
+          ${{ steps.pr-body.outputs.result }}
+          ## 公開日
+          公開日 | 範囲
+          --- | ---
+          2020// | 1%
+          2020// | 2%
+          2020// | 100%
+        draft: false
+        prerelease: false
