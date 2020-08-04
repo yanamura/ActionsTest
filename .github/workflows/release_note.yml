@@ -16,7 +16,20 @@ jobs:
         uses: yanamura/git-merge-diff@v1
       - name: Date
         id: release_date
-        run: ./.github/scripts/release_date.sh
+        uses: actions/github-script@v2
+        with:
+          result-encoding: string
+          script: |
+            const d = new Date()
+            const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
+            const month = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d)
+            const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
+            return `
+              ## 公開日
+              公開日 | 範囲
+              --- | ---
+              ${year}/${month}/${day} | 1%
+            `
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

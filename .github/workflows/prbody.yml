@@ -8,16 +8,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Date
+      uses: actions/github-script@v2
       id: release_date
-      working-directory: .github/scripts
-      run: |
-        sh release_date.sh
+      with:
+        result-encoding: string
+        script: |
+          const d = new Date()
+          const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
+          const month = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d)
+          const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
+          return `
+            ## 公開日
+            公開日 | 範囲
+            --- | ---
+            ${year}/${month}/${day} | 1%
+          `
     - name: hoge
       run: echo ${{steps.release_date.outputs.release_date}}
     - uses: actions/github-script@v2
       id: pr-body
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
+        result-encoding: string
         script: |
           console.log(context.issue)
           const result = await github.pulls.get({
