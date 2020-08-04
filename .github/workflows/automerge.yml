@@ -39,6 +39,25 @@ jobs:
             pull_number: context.issue.number
           })
           return result.data.body
+    - name: Date
+      uses: actions/github-script@v2
+      id: release-date
+      with:
+        result-encoding: string
+        script: |
+          const today = new Date();
+          let tomorrow = new Date();
+          tomorrow.setDate(new Date().getDate()+1);
+          let dftomorrow = new Date();
+          dftomorrow.setDate(new Date().getDate()+2);
+          return `
+            ## 公開日
+            公開日 | 範囲
+            --- | ---
+            ${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()} | 1%
+            ${tomorrow.getFullYear()}/${tomorrow.getMonth()+1}/${tomorrow.getDate()} | 1%
+            ${dftomorrow.getFullYear()}/${dftomorrow.getMonth()+1}/${dftomorrow.getDate()} | 1%
+          `
     - name: ReleaseNote
       id: create_release
       uses: actions/create-release@v1
@@ -49,11 +68,7 @@ jobs:
         release_name: Release ${{ steps.extract_tag.outputs.tag }}
         body: |
           ${{ steps.pr-body.outputs.result }}
-          ## 公開日
-          公開日 | 範囲
-          --- | ---
-          2020// | 1%
-          2020// | 2%
-          2020// | 100%
+          
+          ${{ steps.release-date.outputs.result }}
         draft: false
         prerelease: false
