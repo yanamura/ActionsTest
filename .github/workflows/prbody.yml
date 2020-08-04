@@ -13,10 +13,11 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
           console.log(context.issue)
-          return await github.pulls.get({
+          const result = await github.pulls.get({
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number
           })
+          return result.body
     - name: result
       run: echo ${{steps.pr-body.outputs.result.body}}
