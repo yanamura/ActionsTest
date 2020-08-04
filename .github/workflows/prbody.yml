@@ -7,6 +7,11 @@ jobs:
     if: github.event.label.name == 'body'
     runs-on: ubuntu-latest
     steps:
+    - name: Date
+      id: release_date
+      run: ./.github/scripts/release_date.sh
+    - name: hoge
+      run: echo ${{steps.release_date.outputs.release_date}}
     - uses: actions/github-script@v2
       id: pr-body
       with:
