@@ -7,10 +7,31 @@ jobs:
     if: github.event.label.name == 'body'
     runs-on: ubuntu-latest
     steps:
+    - name: Date
+      uses: actions/github-script@v2
+      id: release_date
+      with:
+        script: |
+          const today = new Date();
+          let tomorrow = new Date();
+          tomorrow.setDate(new Date().getDate()+1);
+          let dftomorrow = new Date();
+          dftomorrow.setDate(new Date().getDate()+2);
+          return `
+            ## 公開日
+            公開日 | 範囲
+            --- | ---
+            ${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()} | 1%
+            ${tomorrow.getFullYear()}/${tomorrow.getMonth()+1}/${tomorrow.getDate()} | 1%
+            ${dftomorrow.getFullYear()}/${dftomorrow.getMonth()+1}/${dftomorrow.getDate()} | 1%
+          `
+    - name: hoge
+      run: echo ${{steps.release_date.outputs.result}}
     - uses: actions/github-script@v2
       id: pr-body
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
+        result-encoding: string
         script: |
           console.log(context.issue)
           const result = await github.pulls.get({
