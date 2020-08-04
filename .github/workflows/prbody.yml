@@ -11,17 +11,19 @@ jobs:
       uses: actions/github-script@v2
       id: release_date
       with:
-        result-encoding: string
         script: |
-          const d = new Date()
-          const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
-          const month = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d)
-          const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
+          const today = new Date();
+          let tomorrow = new Date();
+          tomorrow.setDate(new Date().getDate()+1);
+          let dftomorrow = new Date();
+          dftomorrow.setDate(new Date().getDate()+2);
           return `
             ## 公開日
             公開日 | 範囲
             --- | ---
-            ${year}/${month}/${day} | 1%
+            ${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()} | 1%
+            ${tomorrow.getFullYear()}/${tomorrow.getMonth()+1}/${tomorrow.getDate()} | 1%
+            ${dftomorrow.getFullYear()}/${dftomorrow.getMonth()+1}/${dftomorrow.getDate()} | 1%
           `
     - name: hoge
       run: echo ${{steps.release_date.outputs.result}}
