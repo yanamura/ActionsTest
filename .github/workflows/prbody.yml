@@ -24,7 +24,7 @@ jobs:
             ${year}/${month}/${day} | 1%
           `
     - name: hoge
-      run: echo ${{steps.release_date.outputs.release_date}}
+      run: echo ${{steps.release_date.outputs.result}}
     - uses: actions/github-script@v2
       id: pr-body
       with:
