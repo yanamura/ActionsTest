@@ -18,6 +18,6 @@ jobs:
             repo: context.repo.repo,
             pull_number: context.issue.number
           })
-          return result.body
+          return result.data.body
     - name: result
-      run: echo ${{steps.pr-body.outputs.result.body}}
+      run: echo ${{steps.pr-body.outputs.result}}
