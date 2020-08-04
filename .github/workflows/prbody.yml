@@ -9,7 +9,10 @@ jobs:
     steps:
     - name: Date
       id: release_date
-      run: ../scripts/release_date.sh
+      run: |
+        pwd
+        ls -la
+        ../scripts/release_date.sh
     - name: hoge
       run: echo ${{steps.release_date.outputs.release_date}}
     - uses: actions/github-script@v2
