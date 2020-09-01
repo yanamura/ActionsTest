@@ -8,17 +8,17 @@ jobs:
     if: github.event.label.name == 'monday'
     runs-on: ubuntu-latest
     steps:
-    - name: to Ready
-      uses: actions/github-script@v3
+    - uses: octokit/graphql-action@v2.2.10
       with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        result-encoding: string
-        script: |
-          const result = await github.request("POST /repos/:owner/:repo/pulls", {
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            pull_number: context.issue.number,
-            draft: false          
-          })
-          console.log(result)
-          return result.data.body
+        query: |
+          query 
+            mutation($prID: String!) {
+              markPullRequestReadyForReview(
+                input: {pullRequestId: $prID}
+              ){ clientMutationId }
+            }
+          prID: ${{ github.event.issue.number }}
+          owner: ${{ github.event.repository.owner.name }}
+          repo: ${{ github.event.repository.name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
