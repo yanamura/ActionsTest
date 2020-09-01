@@ -1,0 +1,23 @@
+name: Pull Req Reservation
+
+on:
+  pull_request:
+    types: [labeled]
+jobs:
+  automerge:
+    if: github.event.label.name == 'monday'
+    runs-on: ubuntu-latest
+    steps:
+    - name: to Ready
+      uses: actions/github-script@v2
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        result-encoding: string
+        script: |
+          const result = await github.pulls.update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number,
+            state: 'open'
+          })
+          return result.data.body
