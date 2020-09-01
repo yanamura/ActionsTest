@@ -18,7 +18,8 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number,
-            state: 'close'
+            draft: false,
+            state: 'open'
           })
           console.log(result)
           return result.data.body
