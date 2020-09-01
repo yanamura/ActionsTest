@@ -16,6 +16,6 @@ jobs:
                clientMutationId
             }
           }
-        prid: ${{ github.event.number }}
+        prid: 477062180
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
