@@ -14,12 +14,11 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         result-encoding: string
         script: |
-          const result = await github.pulls.update({
+          const result = await github.request("POST /repos/:owner/:repo/pulls", {
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number,
-            draft: false,
-            state: 'open'
+            draft: false          
           })
           console.log(result)
           return result.data.body
