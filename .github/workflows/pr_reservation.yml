@@ -17,8 +17,6 @@ jobs:
                 input: {pullRequestId: $prID}
               ){ clientMutationId }
             }
-        prID: ${{ github.event.issue.number }}
-        owner: ${{ github.event.repository.owner.name }}
-        repo: ${{ github.event.repository.name }}
+        prID: ${{ github.event }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
