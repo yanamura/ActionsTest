@@ -12,11 +12,11 @@ jobs:
       with:
         query: |
           query 
-            mutation($prID: String!) {
+            mutation($prid: String!) {
               markPullRequestReadyForReview(
-                input: {pullRequestId: $prID}
+                input: {pullRequestId: $prid}
               ){ clientMutationId }
             }
-        prID: ${{ github.event.number }}
+        prid: ${{ github.event.number }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
