@@ -11,11 +11,11 @@ jobs:
     - uses: octokit/graphql-action@v2.2.10
       with:
         query: |
-          mutation($prid: ID!) {
+          mutation(input: MarkPullRequestReadyForReviewInput!) {
             markPullRequestReadyForReview(input: {pullRequestId: $prid}) {
                clientMutationId
             }
           }
-        prid: 477062180
+        prid: ${{ github.event.number }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
