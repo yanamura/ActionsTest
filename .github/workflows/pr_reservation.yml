@@ -38,5 +38,5 @@ jobs:
           }
         id: 'MDExOlB1bGxSZXF1ZXN0NDc3MDYyMTgw'
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
     - run: "echo 'latest release: ${{ steps.huga.outputs.data }}'"
