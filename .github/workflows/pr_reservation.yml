@@ -11,7 +11,7 @@ jobs:
     - uses: octokit/graphql-action@v2.2.10
       with:
         query: |
-          mutation(input: MarkPullRequestReadyForReviewInput!) {
+          mutation {
             markPullRequestReadyForReview(input: {pullRequestId: $prid}) {
                clientMutationId
             }
