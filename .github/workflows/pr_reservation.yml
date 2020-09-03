@@ -25,3 +25,16 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: "echo 'latest release: ${{ steps.hoge.outputs.data }}'"
+    - uses: octokit/graphql-action@v2.2.10
+      id: huga
+      with:
+        query: |
+          mutation($id: ID!) {
+            markPullRequestReadyForReview(input: {pullRequestId: $id}) {
+               pullRequestId
+            }
+          }
+        id: 'MDExOlB1bGxSZXF1ZXN0NDc3MDYyMTgw'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: "echo 'latest release: ${{ steps.huga.outputs.data }}'"
