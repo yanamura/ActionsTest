@@ -13,7 +13,7 @@ jobs:
       with:
         query: |
           query($pr: Int!, $owner:String!,$repo:String!) {
-            repository(owner: "{owner}", name: "{repo}") {
+            repository(owner: $owner, name: $repo) {
               pullRequest(number: $pr) {
                 id
               }
