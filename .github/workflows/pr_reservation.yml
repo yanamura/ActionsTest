@@ -13,7 +13,9 @@ jobs:
         query: |
           query($pr: Int!, $owner:String!,$repo:String!) GetPullRequest {
             repository(owner: "{owner}", name: "{repo}") {
-              pullRequest(number: $pr) {id}
+              pullRequest(number: $pr) {
+                id
+              }
             }
           }
           mutation($id: ID!) ReadyForReview {
@@ -23,6 +25,6 @@ jobs:
           }
         owner: ${{ github.event.repository.owner.name }}
         repo: ${{ github.event.repository.name }}
-        pr: {{ github.event.number }}
+        pr: ${{ github.event.number }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
