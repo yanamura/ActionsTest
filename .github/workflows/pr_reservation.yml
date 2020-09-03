@@ -31,7 +31,7 @@ jobs:
         query: |
           mutation($id: ID!) {
             markPullRequestReadyForReview(input: {pullRequestId: $id}) {
-               pullRequestId
+               pullRequest
             }
           }
         id: 'MDExOlB1bGxSZXF1ZXN0NDc3MDYyMTgw'
