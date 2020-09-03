@@ -11,11 +11,18 @@ jobs:
     - uses: octokit/graphql-action@v2.2.10
       with:
         query: |
-          mutation($prid: ID!) {
-            markPullRequestReadyForReview(input: {pullRequestId: $prid}) {
+          query($pr: Int!, $owner:String!,$repo:String!) GetPullRequest {
+            repository(owner: "{owner}", name: "{repo}") {
+              pullRequest(number: $pr) {id}
+            }
+          }
+          mutation($id: ID!) ReadyForReview {
+            markPullRequestReadyForReview(input: {pullRequestId: $id}) {
                clientMutationId
             }
           }
-        prid: 'MDExOlB1bGxSZXF1ZXN0NDc3MDYyMTgw'
+        owner: ${{ github.event.repository.owner.name }}
+        repo: ${{ github.event.repository.name }}
+        pr: {{ github.event.number }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
