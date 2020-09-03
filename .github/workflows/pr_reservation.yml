@@ -23,7 +23,7 @@ jobs:
                clientMutationId
             }
           }
-        owner: ${{ github.event.repository.owner.name }}
+        owner: ${{ github.repository_owner }}
         repo: ${{ github.event.repository.name }}
         pr: ${{ github.event.number }}
       env:
