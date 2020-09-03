@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: octokit/graphql-action@v2.2.10
+      id: hoge
       with:
         query: |
           query($pr: Int!, $owner:String!,$repo:String!) GetPullRequest {
@@ -18,13 +19,9 @@ jobs:
               }
             }
           }
-          mutation($id: ID!) ReadyForReview {
-            markPullRequestReadyForReview(input: {pullRequestId: $id}) {
-               clientMutationId
-            }
-          }
         owner: ${{ github.repository_owner }}
         repo: ${{ github.event.repository.name }}
         pr: ${{ github.event.number }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: "echo 'latest release: ${{ steps.hoge.outputs.data }}'"
