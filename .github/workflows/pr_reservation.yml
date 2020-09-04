@@ -30,7 +30,7 @@ jobs:
       with:
         json: ${{ steps.hoge.outputs.data }}
         node_id: "repository.pullRequest.id"
-    - run: "node_id is '${{ steps.node_id.outputs.note_id }}''"
+    - run: "node_id is '${{ steps.node_id.outputs.node_id }}''"
     - uses: octokit/graphql-action@v2.2.10
       id: huga
       with:
@@ -42,7 +42,7 @@ jobs:
                }
             }
           }
-        id: ${{ steps.node_id.outputs.note_id }}
+        id: ${{ steps.node_id.outputs.node_id }}
       env:
         GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
     - run: "echo '${{ github.event.repository }}'"
