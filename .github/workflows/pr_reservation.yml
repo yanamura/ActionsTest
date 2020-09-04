@@ -24,7 +24,13 @@ jobs:
         pr: ${{ github.event.number }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - run: "echo 'latest release: ${{ steps.hoge.outputs.data }}'"
+    - run: "echo '${{ steps.hoge.outputs.data }}'"
+    - uses: gr2m/get-json-paths-action@v1.x
+      id: node_id
+      with:
+        json: ${{ steps.hoge.outputs.data }}
+        node_id: "repository.pullRequest.id"
+    - run: "node_id is '${{ steps.node_id.outputs.note_id }}''"
     - uses: octokit/graphql-action@v2.2.10
       id: huga
       with:
@@ -36,7 +42,7 @@ jobs:
                }
             }
           }
-        id: 'MDExOlB1bGxSZXF1ZXN0NDc3MDYyMTgw'
+        id: ${{ steps.node_id.outputs.note_id }}
       env:
         GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
-    - run: "echo 'latest release: ${{ steps.huga.outputs.data }}'"
+    - run: "echo '${{ github.event.repository }}'"
