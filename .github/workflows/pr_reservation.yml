@@ -1,0 +1,46 @@
+name: Pull Req Reservation
+
+on:
+  pull_request:
+    types: [labeled]
+jobs:
+  to-ready:
+    if: github.event.label.name == 'monday'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: octokit/graphql-action@v2.2.10
+      id: hoge
+      with:
+        query: |
+          query($pr: Int!, $owner:String!,$repo:String!) {
+            repository(owner: $owner, name: $repo) {
+              pullRequest(number: $pr) {
+                id
+              }
+            }
+          }
+        owner: ${{ github.repository_owner }}
+        repo: ${{ github.event.repository.name }}
+        pr: ${{ github.event.number }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: "echo '${{ steps.hoge.outputs.data }}'"
+    - uses: gr2m/get-json-paths-action@v1.x
+      id: node_id
+      with:
+        json: ${{ steps.hoge.outputs.data }}
+        node_id: "repository.pullRequest.id"
+    - uses: octokit/graphql-action@v2.2.10
+      with:
+        query: |
+          mutation($id: ID!) {
+            markPullRequestReadyForReview(input: {pullRequestId: $id}) {
+               pullRequest {
+                 number
+               }
+            }
+          }
+        id: ${{ steps.node_id.outputs.node_id }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+    - run: "echo '${{ github.event.repository }}'"
