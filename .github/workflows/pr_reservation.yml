@@ -30,9 +30,8 @@ jobs:
       with:
         json: ${{ steps.hoge.outputs.data }}
         node_id: "repository.pullRequest.id"
-    - run: "node_id is '${{ steps.node_id.outputs.node_id }}''"
+    - run: "node_id is '${{ steps.node_id.outputs.node_id }}'"
     - uses: octokit/graphql-action@v2.2.10
-      id: huga
       with:
         query: |
           mutation($id: ID!) {
