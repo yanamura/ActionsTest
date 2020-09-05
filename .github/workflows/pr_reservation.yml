@@ -2,7 +2,7 @@ name: Pull Req Reservation
 
 on:
   schedule:
-    - cron: '16 * * * *'
+    - cron: '20 * * * *'
 jobs:
   to-ready:
     if: (github.event.pull_request.draft == true) && (github.event.label.name == 'monday')
