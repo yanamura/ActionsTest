@@ -1,9 +1,10 @@
 name: Pull Req Reservation
 
 on:
-  schedule:
+  push
+  #schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '*/10 * * * *'
+    #- cron:  '*/10 * * * *'
 jobs:
   to-ready:
     if: (github.event.pull_request.draft == true) && (github.event.label.name == 'monday')
