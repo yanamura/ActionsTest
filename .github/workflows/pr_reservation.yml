@@ -1,11 +1,13 @@
 name: Pull Req Reservation
 
 on:
-  pull_request:
-    types: [labeled]
+  schedule:
+    - cron: 15 12 * * SAT
 jobs:
   to-ready:
-    if: github.event.label.name == 'monday'
+    if: (github.event.pull_request.draft == true) && (github.event.label.name == 'monday')
+    env:
+      TZ: 'Asia/Tokyo'
     runs-on: ubuntu-latest
     steps:
     - uses: octokit/graphql-action@v2.2.10
