@@ -7,7 +7,7 @@ jobs:
     if: github.event.label.name == 'shipit'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Extract branch name
       uses: mdecoleman/pr-branch-name@1.0.0
       id: extract_branch
@@ -23,10 +23,10 @@ jobs:
       if: startsWith(steps.extract_branch.outputs.branch, 'release')
       uses: yanamura/git-flow-merge-action@v1
       with:
-        github_token: ${{ secrets.BOT_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: ${{ steps.extract_branch.outputs.branch }}
         tag: v${{ steps.extract_tag.outputs.tag }}
-    - name: Get body
+    - name: Get body from PullRequest
       id: pr-body
       uses: actions/github-script@v2
       with:
@@ -39,27 +39,8 @@ jobs:
             pull_number: context.issue.number
           })
           return result.data.body
-    - name: Date
-      uses: actions/github-script@v2
-      id: release-date
-      with:
-        result-encoding: string
-        script: |
-          const today = new Date();
-          let tomorrow = new Date();
-          tomorrow.setDate(new Date().getDate()+1);
-          let dftomorrow = new Date();
-          dftomorrow.setDate(new Date().getDate()+2);
-          return `
-            ## 公開日
-            公開日 | 範囲
-            --- | ---
-            ${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()} | 1%
-            ${tomorrow.getFullYear()}/${tomorrow.getMonth()+1}/${tomorrow.getDate()} | 1%
-            ${dftomorrow.getFullYear()}/${dftomorrow.getMonth()+1}/${dftomorrow.getDate()} | 1%
-          `
-    - name: ReleaseNote
-      id: create_release
+    - name: Create ReleaseNote
+      if: startsWith(steps.extract_branch.outputs.branch, 'release')
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -68,7 +49,5 @@ jobs:
         release_name: Release ${{ steps.extract_tag.outputs.tag }}
         body: |
           ${{ steps.pr-body.outputs.result }}
-          
-          ${{ steps.release-date.outputs.result }}
         draft: false
         prerelease: false
