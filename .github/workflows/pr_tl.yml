@@ -1,0 +1,23 @@
+name: Pull Req Timeline
+
+on:
+  push
+jobs:
+  to-ready:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: octokit/graphql-action@v2.2.10
+      id: hoge
+      with:
+        query: |
+          query($owner:String!,$repo:String!) {
+            repository(owner: $owner, name: $repo) {
+              pullRequest(number: $pr) {
+                id
+              }
+            }
+          }
+        owner: ${{ github.repository_owner }}
+        repo: ${{ github.event.repository.name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
