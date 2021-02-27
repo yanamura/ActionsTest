@@ -19,7 +19,7 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
     - run: echo ${{ steps.vars.outputs.branch }}
-    - uses: yanamura/ios-bump-version@v1.0.1
+    - uses: yanamura/ios-bump-version@b10613df320d414c7a6aa3ede02ea3216e94f781
     - name: run
       run: |
         echo ${{ steps.vars.outputs.branch }}
