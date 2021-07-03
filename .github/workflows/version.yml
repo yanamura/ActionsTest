@@ -14,12 +14,20 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: mdecoleman/pr-branch-name@1.0.0
-      id: vars
+    - name: Extract branch name
+      uses: mdecoleman/pr-branch-name@1.0.0
+      id: extract_branch
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - run: echo ${{ steps.vars.outputs.branch }}
-    - uses: yanamura/ios-bump-version@v1.0.1
+    - name: Extract version
+      shell: bash
+      run: |
+        branch=${{ steps.extract_branch.outputs.branch }}
+        echo "##[set-output name=version;]$(echo ${branch#release-})"
+      id: extract_version
+    - uses: yanamura/ios-bump-version@version-file
+      with:
+        version: ${{ steps.extract_version.outputs.version }}
     - name: run
       run: |
         echo ${{ steps.vars.outputs.branch }}
