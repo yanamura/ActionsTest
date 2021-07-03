@@ -30,12 +30,12 @@ jobs:
         version: ${{ steps.extract_version.outputs.version }}
     - name: run
       run: |
-        echo ${{ steps.vars.outputs.branch }}
+        echo ${{ steps.extract_branch.outputs.branch }}
         git diff
         git config --global user.name "yanamura"
         git config --global user.email "yanamura3@gmail.com"
         git fetch -p
-        git checkout ${{ steps.vars.outputs.branch }}
+        git checkout ${{ steps.extract_branch.outputs.branch }}
         git add .
         git commit -m "build version ++"
-        git push origin ${{ steps.vars.outputs.branch }}
+        git push origin ${{ steps.extract_branch.outputs.branch }}
