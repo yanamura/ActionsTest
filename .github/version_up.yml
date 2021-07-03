@@ -13,7 +13,7 @@ jobs:
         version=${{ github.ref }}
         echo "##[set-output name=version;]$(echo ${version#refs/heads/release-})"
       id: version
-    - uses: yanamura/ios-bump-version@v1.0.1
+    - uses: yanamura/ios-bump-version@v1.2.0
       with:
         version: ${{ steps.version.outputs.version }}
     - name: run
