@@ -6,8 +6,6 @@ name: VersionUp
 # events but only for the master branch
 on:
   push:
-    paths:
-      - 'version.file'
 
 jobs:
   versionup:
