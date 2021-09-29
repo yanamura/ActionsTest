@@ -20,7 +20,7 @@ jobs:
       id: extract_branch
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: yanamura/ios-bump-version@v1
+    - uses: yanamura/ios-bump-version@outputs
       with:
         version-path: v/version.file
     - name: run
