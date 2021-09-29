@@ -7,7 +7,7 @@ name: Vup
 on:
   push:
     paths:
-      - 'v/version.file'
+      - 'version.file'
 
 jobs:
   versionup:
@@ -24,6 +24,7 @@ jobs:
       with:
         version-path: v/version.file
     - name: run
+      id: ru
       run: |
         echo ${{ steps.extract_branch.outputs.branch }}
         git diff
@@ -34,3 +35,5 @@ jobs:
         git add .
         git commit -m "build version ++"
         git push origin ${{ steps.extract_branch.outputs.branch }}
+    - name: ver
+        run: echo ${{steps.ru.outputs.version}} ${{steps.ru.outputs.build-number}}
