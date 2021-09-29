@@ -36,4 +36,6 @@ jobs:
         git commit -m "build version ++"
         git push origin ${{ steps.extract_branch.outputs.branch }}
     - name: ver
-        run: echo ${{steps.ru.outputs.version}} ${{steps.ru.outputs.build-number}}
+      run: |
+        echo ${{ steps.ru.outputs.version }}
+        echo ${{ steps.ru.outputs.build-number }}
