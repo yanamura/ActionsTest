@@ -7,7 +7,7 @@ name: Vup
 on:
   push:
     paths:
-      - 'v/version.file'
+      - 'version.file'
 
 jobs:
   versionup:
