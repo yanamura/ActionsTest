@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Vup
+name: VersionUp
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -10,7 +10,7 @@ on:
 
 jobs:
   versionup:
-    if: startsWith(github.event.pull_request.title, 'Release')
+    # if: startsWith(github.event.pull_request.title, 'Release')
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,10 +19,11 @@ jobs:
       id: extract_branch
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: yanamura/ios-bump-version@v1
+    - uses: yanamura/ios-bump-version@outputs
       with:
         version-path: v/version.file
     - name: run
+      id: ru
       run: |
         echo ${{ steps.extract_branch.outputs.branch }}
         git diff
@@ -33,3 +34,7 @@ jobs:
         git add .
         git commit -m "build version ++"
         git push origin ${{ steps.extract_branch.outputs.branch }}
+    - name: ver
+      run: |
+        echo ${{ steps.ru.outputs.version }}
+        echo ${{ steps.ru.outputs.build-number }}
