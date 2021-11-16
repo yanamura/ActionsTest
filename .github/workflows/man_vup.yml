@@ -11,6 +11,7 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
+      token: ${{secrets.BOT_TOKEN}}
     - uses: yanamura/ios-bump-version@master
       id: version
       with:
