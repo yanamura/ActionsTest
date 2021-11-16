@@ -22,10 +22,10 @@ jobs:
         git config --global user.name "yanamura"
         git config --global user.email "yanamura3@gmail.com"
         git fetch -p
-        git checkout release-${{ steps.version.outputs.version }}
+        git checkout -b release-${{ steps.version.outputs.version }}
         git add .
         git commit -m "build version ++"
-        git push origin release-${{ steps.extract_branch.outputs.branch }}
+        git push origin HEAD
     - name: ver
       run: |
         echo "${{ steps.version.outputs.version }}"
