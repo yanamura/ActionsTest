@@ -20,6 +20,7 @@ jobs:
     - name: run
       run: |
         echo ${{ steps.version.outputs.version }}
+        /usr/libexec/PlistBuddy -c "Set PreferenceSpecifiers:0:DefaultValue ${{ steps.version.outputs.version }}" "hoge/Settings.bundle/Root.plist"
         git diff
         git config --global user.name "yanamura"
         git config --global user.email "yanamura3@gmail.com"
