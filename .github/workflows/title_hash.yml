@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: add hash to title
-      uses: actions/github-script@v3
+      uses: actions/github-script@v6
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
-          await github.pulls.update({
+          await github.rest.pulls.update({
             owner: context.repo.owner,
             repo: context.repo.repo,
             pull_number: context.issue.number,
