@@ -7,7 +7,7 @@ jobs:
     if: github.event.label.name == 'shipit'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Extract branch name
       uses: mdecoleman/pr-branch-name@1.0.0
       id: extract_branch
@@ -21,7 +21,7 @@ jobs:
       id: extract_tag
     - name: Merge
       if: startsWith(steps.extract_branch.outputs.branch, 'release')
-      uses: yanamura/git-flow-merge-action@v1
+      uses: yanamura/git-flow-merge-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: ${{ steps.extract_branch.outputs.branch }}
