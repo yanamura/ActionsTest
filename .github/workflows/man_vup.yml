@@ -1,0 +1,34 @@
+name: Manual Version up
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: false
+
+jobs:
+  versionup:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{secrets.BOT_TOKEN}}
+    - uses: yanamura/ios-bump-version@output-version
+      id: version
+      with:
+        version: ${{ github.event.inputs.version }}
+    - name: run
+      run: |
+        echo ${{ steps.version.outputs.version }}
+        git diff
+        git config --global user.name "yanamura"
+        git config --global user.email "yanamura3@gmail.com"
+        git fetch -p
+        git checkout -b release-${{ steps.version.outputs.version }}
+        git add .
+        git commit -m "build version ++"
+        git push origin HEAD
+    - name: ver
+      run: |
+        echo "${{ steps.version.outputs.version }}"
+        echo "${{ steps.version.outputs.build-number }}"

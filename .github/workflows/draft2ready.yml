@@ -1,0 +1,11 @@
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: yanamura/draft-to-ready-schedule-action@v1
+        with:
+          github_token: ${{ secrets.BOT_TOKEN }}
