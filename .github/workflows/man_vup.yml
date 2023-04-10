@@ -10,10 +10,10 @@ jobs:
   versionup:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         token: ${{secrets.BOT_TOKEN}}
-    - uses: yanamura/ios-bump-version@output-version
+    - uses: yanamura/ios-bump-version@master
       id: version
       with:
         version: ${{ github.event.inputs.version }}
