@@ -10,6 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         name: Checkout repository
+      - name: Extract branch name
+        uses: mdecoleman/pr-branch-name@2.0.0
+        id: extract_branch
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: yanamura/git-flow-merge-action@avoid-merge-same-branch
         name: git-flow merge
         with:
