@@ -1,0 +1,18 @@
+on:
+  pull_request:
+    branches:
+      - master
+    types: [closed]
+jobs:
+  auto-merge-dev:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout repository
+      - uses: yanamura/git-flow-merge-action@avoid-merge-same-branch
+        name: git-flow merge
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.extract_branch.outputs.branch }}
+          develop_branch: "develop"
