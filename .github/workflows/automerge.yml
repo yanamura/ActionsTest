@@ -21,7 +21,7 @@ jobs:
       id: extract_tag
     - name: Merge
       if: startsWith(steps.extract_branch.outputs.branch, 'release')
-      uses: yanamura/git-flow-merge-action@v1
+      uses: yanamura/git-flow-merge-action@avoid-merge-same-branch
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: ${{ steps.extract_branch.outputs.branch }}
