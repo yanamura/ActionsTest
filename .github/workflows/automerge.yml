@@ -17,7 +17,8 @@ jobs:
       shell: bash
       run: |
         branch=${{ steps.extract_branch.outputs.branch }}
-        echo "##[set-output name=tag;]$(echo ${branch#release-})"
+        echo "hoge-ta"
+        echo "tag=${branch#release-}" >> "$GITHUB_OUTPUT"
       id: extract_tag
     - name: Merge
       if: startsWith(steps.extract_branch.outputs.branch, 'release')
