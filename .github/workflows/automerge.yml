@@ -42,7 +42,7 @@ jobs:
           return result.data.body
     - name: Create ReleaseNote
       if: startsWith(steps.extract_branch.outputs.branch, 'release')
-      uses: oftprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v1
       with:
         tag_name: v${{ steps.extract_tag.outputs.tag }}
         name: Release ${{ steps.extract_tag.outputs.tag }}
