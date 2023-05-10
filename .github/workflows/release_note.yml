@@ -8,12 +8,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Create Log
         id: changelog
-        uses: yanamura/git-merge-diff@v1
+        uses: yanamura/git-merge-diff@main
       - name: Date
         uses: actions/github-script@v2
         id: release_date
