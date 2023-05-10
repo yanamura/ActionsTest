@@ -11,7 +11,7 @@ jobs:
         fetch-depth: 0
     - name: Create Log
       id: changelog
-      uses: yanamura/git-merge-diff@main
+      uses: yanamura/git-merge-diff@master
       with:
         from: latest
         to: HEAD
